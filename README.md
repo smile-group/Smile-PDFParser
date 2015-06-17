@@ -1,2 +1,2 @@
 # Smile-PDFParser
-A simple parser tool for parsing the pdf documents to txt.
+A simple parser tool for parsing pdf documents to txt.
