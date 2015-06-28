@@ -1,4 +1,11 @@
+import org.apache.commons.io.filefilter.FileFilterUtils;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,11 +17,17 @@ import static java.util.stream.Collectors.toList;
 public class FileHandler {
 
     public static List<File> getPDFilesPaths(String target) {
-        File targetDirectory = new File(target);
-        String rootPath = targetDirectory.getAbsolutePath() + "/";
-        List<String> files = Arrays.asList(targetDirectory.list((dir, name) -> name.substring(name.length() - 3).equalsIgnoreCase("pdf")));
+        List<File> files = new ArrayList<>();
+        try {
+            files = Files.walk(Paths.get(target))
+                                 .filter(s -> s.endsWith("pdf"))
+                                 .map(Path::toFile)
+                                 .collect(toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return files.stream().map((file) -> new File(rootPath + file)).collect(toList());
+        return files;
     }
 
     public static void writeStringIntoFile(String fileName, String content) {

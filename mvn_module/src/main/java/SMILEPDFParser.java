@@ -12,6 +12,7 @@ public class SMILEPDFParser {
 
     public static void parseAllPDFsFromSourcePathToTarget(String source, String target) {
         List<File> fileList = FileHandler.getPDFilesPaths(source);
+
         fileList.stream().forEach(filePath -> {
             String dest = target + filePath.getName().substring(0, filePath.getName().length() - 3) + "txt";
             String content = parseFileWithTika(filePath);
