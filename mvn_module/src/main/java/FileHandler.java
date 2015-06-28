@@ -1,4 +1,6 @@
+import com.google.common.io.PatternFilenameFilter;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
@@ -19,10 +21,12 @@ public class FileHandler {
     public static List<File> getPDFilesPaths(String target) {
         List<File> files = new ArrayList<>();
         try {
+            System.out.println(Paths.get(target));
+            System.out.println();
             files = Files.walk(Paths.get(target))
-                                 .filter(s -> s.endsWith("pdf"))
-                                 .map(Path::toFile)
-                                 .collect(toList());
+                         .map(Path::toFile)
+                         .filter(s -> s.getName().endsWith("pdf") || s.getName().endsWith("PDF"))
+                         .collect(toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
