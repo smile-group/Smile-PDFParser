@@ -21,8 +21,6 @@ public class FileHandler {
     public static List<File> getPDFilesPaths(String target) {
         List<File> files = new ArrayList<>();
         try {
-            System.out.println(Paths.get(target));
-            System.out.println();
             files = Files.walk(Paths.get(target))
                          .map(Path::toFile)
                          .filter(s -> s.getName().endsWith("pdf") || s.getName().endsWith("PDF"))
